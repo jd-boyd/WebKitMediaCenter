@@ -1,0 +1,111 @@
+body{
+    background-color: #000000;
+    color: #FFFFFF;
+    font-family: sans-serif;
+    padding: 0px;
+    margin: 0px;
+    background: url(../img/background.jpg);
+    z-index: 0;
+}
+
+#overlay{
+    position: aboslute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    padding: 0px;
+    margin: 0px;
+    display: none;
+    z-index: 3;
+    padding: 8px;
+}
+
+.video_player{
+    background-color: #000000;
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    padding: 0px;
+    margin: 0px;
+    display: none;
+    z-index: 5;
+}
+
+.video_player_back{
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    z-index: 6;
+    width: 32px;
+    height: 32px;
+    background-image: url(../img/backarrow.svg);
+    background-repeat: no-repeat;
+    background-size: 32px 32px;
+    border: 3px solid black;
+    border-radius: 6px;
+}
+
+.video_player_back_hover{
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    z-index: 6;
+    width: 32px;
+    height: 32px;
+    background-image: url(../img/backarrow.svg);
+    background-repeat: no-repeat;
+    background-size: 32px 32px;
+    border: 3px solid green;
+    border-radius: 6px;
+}
+
+#content{
+    z-index: 1;
+}
+
+#home{
+    padding-left: 10%;
+    padding-top: 20%;
+    z-index: 2;
+}
+
+.home_link{
+    margin: 32px 0px 32px 0px;
+    text-decoration: none;
+    font-size: 32px;
+    color: #FFFFFF;
+}
+
+.home_link_hover{
+    margin: 32px 0px 32px 0px;
+    text-decoration: none;
+    font-size: 32px;
+    color: #FF8844;
+}
+
+#home_preview{
+    /* */
+}
+
+.back_button{
+    width: 32px;
+    height: 32px;
+    background-image: url(../img/backarrow.svg);
+    background-repeat: no-repeat;
+    background-size: 32px 32px;
+    border: 3px solid black;
+    border-radius: 6px;
+}
+
+.back_button_hover{
+    width: 32px;
+    height: 32px;
+    background-image: url(../img/backarrow.svg);
+    background-repeat: no-repeat;
+    background-size: 32px 32px;
+    border: 3px solid green;
+    border-radius: 6px;
+}
