@@ -32,14 +32,9 @@ var PlayerView = Backbone.View.extend({
         video.attr("width", "100%");
         video.attr("height", "100%");
         video.attr("controls", "cotrols");
+        video.attr("autoplay", "autoplay");
         var source = $("<source>");
         source.attr("src", this.model.toJSON().filename);
-        /*var video_type = this.video_type();
-        if (video_type === 'mp4') {
-            source.attr("type", "video/mp4");
-        } else if (video_type === 'ogg') {
-            source.attr("type", "video/ogg");
-        }*/
         video.append(source);
         var back_button = $("<div>");
         back_button.attr("id", "video_back_button");
