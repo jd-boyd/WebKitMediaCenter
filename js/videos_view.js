@@ -16,7 +16,7 @@ var VideosView = Backbone.View.extend({
         _.bindAll(this, "close_video");
     },
     play_video: function(filename) {
-        $(".video_player").empty();
+        /*$(".video_player").empty();
         var player = new PlayerView({
             el: $("<div>"),
             model: new PlayerModel({
@@ -26,12 +26,13 @@ var VideosView = Backbone.View.extend({
         player.render();
         player.bind("video_closed", this.close_video);
         $(".video_player").append(player.el);
-        $(".video_player").show();
+        $(".video_player").show();*/
+        external_player.play(filename);
     },
     close_video: function() {
-        $(".video_player").empty();
+        /*$(".video_player").empty();
         $(".video_player").hide();
-        console.log("VIDEO PLAYER CLOSED");
+        console.log("VIDEO PLAYER CLOSED");*/
     },
     back: function(event) {
         event.preventDefault();
