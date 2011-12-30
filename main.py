@@ -25,6 +25,19 @@ class LoadVideos(QObject):
             data.append('test/videos/' + filename)
         return json.dumps(data)
 
+class LoadAudio(QObject):
+    def __init__(self, page_interaction, parent = None):
+        super(LoadAudio, self).__init__(parent)
+        self.js = page_interaction
+
+    @Slot(result=str)
+    def root(self):
+        files = os.listdir('test/audio/')
+        data = []
+        for filename in files:
+            data.append('test/audio/' + filename)
+        return json.dumps(data)
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     web = QWebView()
@@ -36,9 +49,11 @@ if __name__ == "__main__":
 
     page_interaction = PageInteraction(web)
     videos = LoadVideos(page_interaction)
+    audio = LoadAudio(page_interaction)
 
     frame = web.page().mainFrame()
     frame.addToJavaScriptWindowObject('videos', videos)
+    frame.addToJavaScriptWindowObject('audio', audio)
 
     web.show()
 
