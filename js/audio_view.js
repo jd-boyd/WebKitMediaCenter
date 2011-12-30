@@ -1,10 +1,10 @@
-var VideosModel = Backbone.Model.extend({
+var AudioModel = Backbone.Model.extend({
     initialize: function() {
         this.navigation_path = '';
     }
 });
 
-var VideosView = Backbone.View.extend({
+var AudioView = Backbone.View.extend({
     tag: "div",
     events: {
         "click #home_button": "back"
@@ -12,11 +12,12 @@ var VideosView = Backbone.View.extend({
     initialize: function() {
         _.bindAll(this, "render");
         _.bindAll(this, "back");
-        _.bindAll(this, "play_video");
-        _.bindAll(this, "close_video");
+        _.bindAll(this, "play_audio");
+        _.bindAll(this, "close_audio");
     },
-    play_video: function(filename) {
-        $(".video_player").empty();
+    play_audio: function(filename) {
+        alert("PA");
+        $(".audio_player").empty();
         var player = new PlayerView({
             el: $("<div>"),
             model: new PlayerModel({
@@ -24,15 +25,14 @@ var VideosView = Backbone.View.extend({
             })
         });
         player.render();
-        player.bind("video_closed", this.close_video);
-        $(".video_player").append(player.el);
-        $(".video_player").show();
-        //external_player.play(filename);
+        player.bind("audio_closed", this.close_audio);
+        $(".audio_player").append(player.el);
+        $(".audio_player").show();
     },
-    close_video: function() {
-        $(".video_player").empty();
-        $(".video_player").hide();
-        console.log("VIDEO PLAYER CLOSED");
+    close_audio: function() {
+        $(".audio_player").empty();
+        $(".audio_player").hide();
+        console.log("AUDIO PLAYER CLOSED");
     },
     back: function(event) {
         event.preventDefault();
@@ -66,15 +66,15 @@ var VideosView = Backbone.View.extend({
             var item_element = $("<li>");
             var item_link = $("<a>");
             item_link.html(list_element);
-            item_link.addClass("video_link");
+            item_link.addClass("audio_link");
             item_element.append(item_link);
             file_list_ul.append(item_element);
             var button_view = new ButtonView({
                 el: $(item_link),
                 val: list_element
             });
-            button_view.bind("btn_click", this.play_video);
+            button_view.bind("btn_click", this.play_audio);
         }
-        this.$("#videos_browser").append(file_list_ul);
+        this.$("#audio_browser").append(file_list_ul);
     }
 });

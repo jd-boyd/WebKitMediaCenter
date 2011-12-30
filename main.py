@@ -46,6 +46,19 @@ class PlayVideo(QObject):
         video_widget.show()
         media_obj.play()
 
+class LoadAudio(QObject):
+    def __init__(self, page_interaction, parent = None):
+        super(LoadAudio, self).__init__(parent)
+        self.js = page_interaction
+
+    @Slot(result=str)
+    def root(self):
+        files = os.listdir('test/audio/')
+        data = []
+        for filename in files:
+            data.append('test/audio/' + filename)
+        return json.dumps(data)
+
 if __name__ == "__main__":
     global video_widget
     app = QApplication(sys.argv)
@@ -64,6 +77,11 @@ if __name__ == "__main__":
     frame = web.page().mainFrame()
     frame.addToJavaScriptWindowObject('videos', videos)
     frame.addToJavaScriptWindowObject('external_player', player)
+    audio = LoadAudio(page_interaction)
+
+    frame = web.page().mainFrame()
+    frame.addToJavaScriptWindowObject('videos', videos)
+    frame.addToJavaScriptWindowObject('audio', audio)
 
     web.show()
 
