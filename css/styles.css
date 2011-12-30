@@ -62,6 +62,19 @@ body{
     border-radius: 6px;
 }
 
+.audio_player{
+    background-color: #000000;
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    padding: 0px;
+    margin: 0px;
+    display: none;
+    z-index: 5;
+}
+
 #content{
     z-index: 1;
 }

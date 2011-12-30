@@ -37,6 +37,25 @@ var HomeView = Backbone.View.extend({
     },
     select_music: function(event) {
         event.preventDefault();
+        $("#overlay").empty();
+        if (!_.isNull(this.audio_view)) {
+            delete this.audio_view;
+            this.audio_view = null;
+        }
+        load_template("audio.tmpl", function(data) {
+            this.audio_view = new AudioView({
+                el: $("<div>"),
+                model: new AudioModel({
+                    file_list: JSON.parse(audio.root())
+                })
+            });
+            this.audio_view.set_template(data);
+            this.audio_view.render();
+            $("#overlay").append(this.audio_view.el);
+            $("#content").fadeOut(250);
+            setTimeout('$("#overlay").fadeIn(250);', 250);
+        });
+
     },
     set_template: function(template_data) {
         this.template = template_data;
