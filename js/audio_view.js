@@ -18,7 +18,7 @@ var AudioView = Backbone.View.extend({
     play_audio: function(filename) {
         alert("PA");
         $(".audio_player").empty();
-        var player = new PlayerView({
+        var player = new VideoPlayer({
             el: $("<div>"),
             model: new PlayerModel({
                 filename: filename

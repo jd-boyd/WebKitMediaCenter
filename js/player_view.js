@@ -4,7 +4,7 @@ var PlayerModel = Backbone.Model.extend({
     }
 });
 
-var PlayerView = Backbone.View.extend({
+var VideoPlayer = Backbone.View.extend({
     tag: "div",
     events: {
         "click #video_back_button": "back"

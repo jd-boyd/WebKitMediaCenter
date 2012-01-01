@@ -17,7 +17,7 @@ var VideosView = Backbone.View.extend({
     },
     play_video: function(filename) {
         $(".video_player").empty();
-        var player = new PlayerView({
+        var player = new VideoPlayer({
             el: $("<div>"),
             model: new PlayerModel({
                 filename: filename
