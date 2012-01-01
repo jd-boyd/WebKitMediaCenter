@@ -9,8 +9,11 @@ from PySide.QtGui import *
 from PySide.QtWebKit import *
 
 from PySide import QtGui, QtDeclarative
+from PySide.phonon import Phonon
 
 from modules.page_interaction import PageInteraction
+
+video_widget = None
 
 class LoadVideos(QObject):
     def __init__(self, page_interaction, parent = None):
@@ -24,6 +27,24 @@ class LoadVideos(QObject):
         for filename in files:
             data.append('test/videos/' + filename)
         return json.dumps(data)
+
+class PlayVideo(QObject):
+    def __init__(self, page_interaction, parent = None):
+        super(PlayVideo, self).__init__(parent)
+        self.js = page_interaction
+
+    @Slot(str)
+    def play(self, filepath):
+        global video_widget
+        media_source = Phonon.MediaSource(filepath)
+        media_obj = Phonon.MediaObject()
+        media_obj.setCurrentSource(media_source)
+        video_widget = Phonon.VideoWidget()
+        Phonon.createPath(media_obj, video_widget)
+        audio_out = Phonon.AudioOutput(Phonon.VideoCategory)
+        Phonon.createPath(media_obj, audio_out)
+        video_widget.show()
+        media_obj.play()
 
 class LoadAudio(QObject):
     def __init__(self, page_interaction, parent = None):
@@ -39,6 +60,7 @@ class LoadAudio(QObject):
         return json.dumps(data)
 
 if __name__ == "__main__":
+    global video_widget
     app = QApplication(sys.argv)
     web = QWebView()
     web.settings().setAttribute(QWebSettings.DeveloperExtrasEnabled, True)
@@ -46,9 +68,15 @@ if __name__ == "__main__":
     web.settings().setOfflineStoragePath('/tmp')
     web.settings().setOfflineStorageDefaultQuota(100000000)
     web.load(QUrl("main.html"))
+    video_widget = Phonon.VideoWidget()
 
     page_interaction = PageInteraction(web)
     videos = LoadVideos(page_interaction)
+    player = PlayVideo(page_interaction)
+
+    frame = web.page().mainFrame()
+    frame.addToJavaScriptWindowObject('videos', videos)
+    frame.addToJavaScriptWindowObject('external_player', player)
     audio = LoadAudio(page_interaction)
 
     frame = web.page().mainFrame()
@@ -60,38 +88,4 @@ if __name__ == "__main__":
     inspect = QWebInspector()
     inspect.setPage(web.page())
 
-    sys.exit(app.exec_())
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#class VideoPlayer(QObject):
-#def __init__(self, page_interaction, parent = None):
-    #super(VideoPlayer, self).__init__(parent)
-    #self.js = page_interaction
-
-#@Slot(str)
-#def load_and_play(self, filename):
-    #self.js.exec_js('''$("#video_player").empty();''')
-    #self.js.exec_js('''var video = $("<video>");''')
-    #self.js.exec_js('''video.attr("width", "320");''')
-    #self.js.exec_js('''video.attr("height", "240");''')
-    #self.js.exec_js('''video.attr("controls", "controls");''')
-    #self.js.exec_js('''var source = $("<source>");''')
-    #self.js.exec_js('''source.attr("src", "%s");''' % filename)
-    #if filename.endswith('.mp4'):
-        #self.js.exec_js('''source.attr("type", "video/mp4");''')
-    #elif filename.endswith('.ogg'):
-        #self.js.exec_js('''source.attr("type", "video/ogg");''')
-    #self.js.exec_js('''video.append(source);''')
-    #self.js.exec_js('''$("#video_player").append(video);''')
+    app.exec_()

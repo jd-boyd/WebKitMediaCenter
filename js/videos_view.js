@@ -27,6 +27,7 @@ var VideosView = Backbone.View.extend({
         player.bind("video_closed", this.close_video);
         $(".video_player").append(player.el);
         $(".video_player").show();
+        //external_player.play(filename);
     },
     close_video: function() {
         $(".video_player").empty();
